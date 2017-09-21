@@ -3,11 +3,6 @@ extends layout
 block content
 
 	if news.length
-		p.timer Time to reload: 
-			span#reload-time -
-			a(href='/feeds' class='load-feeds') reload now
-			img(src='/img/loader.gif' class='loader hide ml-2')
-		
 		each feed in news
 			div(id='feed-row-#{feed.object_id}' class='row')
 				div.col-9
@@ -19,6 +14,4 @@ block content
 					i.material-icons.float-right.delete-feed(data-feed-id='#{feed.object_id}') delete
 
 	else
-		h3.mb-3 There are no news! Please click the button to load them
-		a(class='btn btn-primary load-feeds' href='/feeds' role='button') Feed me!
-		img(src='/img/loader.gif' class='loader hide ml-2')
+		h3.mb-3 There are no news! They must be on their way, try reloading the page :)

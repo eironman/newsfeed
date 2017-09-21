@@ -1,5 +1,8 @@
+const request = require('request');
+const feedsUrl = 'https://hn.algolia.com/api/v1/search_by_date?query=nodejs';
+
 // Filters feeds: removes old feeds or without title
-let updateFeeds = (deletedFeeds, newestFeed, feedsData) => {
+let filterFeeds = (deletedFeeds, newestFeed, feedsData) => {
 	let title, url;
 	let feedsDocuments = [];
 	let newestFeedDate = null;
@@ -48,6 +51,7 @@ let updateFeeds = (deletedFeeds, newestFeed, feedsData) => {
 		}
 
 		if (title !== null) {
+			// Feed ok
 			feedsDocuments.push({
 				'created_at': feedsData[i]['created_at'],
 				'title'		: title,
@@ -61,4 +65,55 @@ let updateFeeds = (deletedFeeds, newestFeed, feedsData) => {
 	return feedsDocuments;
 }
 
+// Stores the latest feeds
+let updateFeeds = (db) => {
+
+	console.log('[START] Updating feeds')
+
+	// Get the newest feed in db
+	db.collection('nodejs-news').find().sort({'created_at': -1}).limit(1).toArray(function(err, result) {
+
+		newestFeed = [];
+		if (result.length !== 0) {
+			newestFeed = result[0];
+		}
+
+		// Get the feeds from hacker news
+		request(feedsUrl, function(error, response, body) {
+					
+			if (!error && response.statusCode == 200) {
+				
+				feedsData = JSON.parse(response.body)
+
+				// Get deleted feeds
+				db.collection('nodejs-deleted-news').find().toArray(function(error, deletedFeeds) {
+
+					// Filter old and deleted feeds
+					const feedsDocuments = filterFeeds(deletedFeeds, newestFeed, feedsData['hits']);
+
+					if (feedsDocuments.length > 0) {
+						
+						// Store new feeds
+						db.collection('nodejs-news').insert(feedsDocuments, (error, result) => {
+							if (error) {
+								console.log(error);
+								console.log('[ERROR] Updating feeds - Could not store in db')
+							} else {
+								console.log('[END] Updating feeds completed')
+							}
+						});
+					} else {
+						console.log('[END] Updating feeds completed - No feeds to save')
+					}
+				});
+				
+			} else {
+				console.log('[ERROR] Updating feeds - No connection to hacker news')
+				console.log(error)
+			}
+		});
+	});
+}
+
+exports.filterFeeds = filterFeeds
 exports.updateFeeds = updateFeeds
