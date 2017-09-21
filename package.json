@@ -1,0 +1,21 @@
+{
+  "name": "hacker-news-feed",
+  "version": "1.0.0",
+  "description": "Read news feed from hacker news, store them in a Mongodb database and show them as a list",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "Aaron Amengual Arranz",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.4",
+    "jade": "^1.11.0",
+    "moment": "^2.18.1",
+    "mongodb": "^2.2.31",
+    "request": "^2.82.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
+}

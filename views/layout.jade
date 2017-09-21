@@ -1,0 +1,30 @@
+doctype html
+html
+	head
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible' content='IE=edge')
+		meta(name='viewport' content='width=device-width, initial-scale=1')
+		meta(name='description' content=description)
+		
+		title= 'Hacker News - Nodejs'
+		
+		link(rel='stylesheet', href='https://fonts.googleapis.com/icon?family=Material+Icons')
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/css/style.css')
+		
+		script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js')
+		script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js')
+		script(src='/js/scripts.js')
+		
+
+	body
+
+		div.header.bg-info.text-light.mb-4
+			div.container
+				h1 HN FEED
+				h2 We <3 hacker news!
+
+		div.container
+			block content
+

@@ -1,0 +1,22 @@
+extends layout
+
+block content
+
+	if news.length
+		p.timer Time to reload: 
+			span#reload-time -
+			a(href='/feeds') reload now
+		
+		each feed in news
+			div(id='feed-row-#{feed.object_id}' class='row')
+				div.col-9
+					a(href='#{feed.url}' target='_blank' role='button' class='align-middle') 
+						span.feed-title #{feed.title}
+						span.feed-author - #{feed.author} -
+				div.col-2.feed-date #{feed.created_at}
+				div.col-1
+					i.material-icons.float-right.delete-feed(data-feed-id='#{feed.object_id}') delete
+
+	else
+		h3.mb-3 There are no news! Please click the button to load them
+		a(class='btn btn-primary' href='/feeds' role='button') Feed me!
