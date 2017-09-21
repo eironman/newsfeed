@@ -1,7 +1,13 @@
 $(function(){
     
+    // Load feeds
+    $('.load-feeds').click(function() {
+        $(this).addClass('disabled');
+        $('.loader').removeClass('hide');
+    });
+
     // Delete feed button
-	$(".delete-feed").click(function() {
+	$('.delete-feed').click(function() {
         if (confirm('Are you sure you want to delete it?'))
         {
             const feedId = $(this).data('feed-id');
@@ -12,7 +18,6 @@ $(function(){
             .done(function(response) {
                 if (response['result'] == 'ok') {
                     $("#feed-row-" + feedId).remove();
-                    alert('Deleted succesfully!');
                 } else {
                     alert('Oops! Something went wrong')
                 }
@@ -30,7 +35,7 @@ $(function(){
 // Formats a number to have two digits
 function padTime(i) {
     if (i<10) {
-        i = "0" + i;
+        i = '0' + i;
     }
     return i;
 }

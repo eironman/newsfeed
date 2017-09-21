@@ -9,6 +9,7 @@ h2 {
 }
 .timer{
 	font-size: 12px;
+	line-height: 25px;
 }
 .timer a{
 	padding-left: 5px;
@@ -45,4 +46,7 @@ h2 {
 }
 .row:hover .delete-feed{
 	display: block;
+}
+.hide {
+	display: none;
 }

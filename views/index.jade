@@ -5,7 +5,8 @@ block content
 	if news.length
 		p.timer Time to reload: 
 			span#reload-time -
-			a(href='/feeds') reload now
+			a(href='/feeds' class='load-feeds') reload now
+			img(src='/img/loader.gif' class='loader hide ml-2')
 		
 		each feed in news
 			div(id='feed-row-#{feed.object_id}' class='row')
@@ -19,4 +20,5 @@ block content
 
 	else
 		h3.mb-3 There are no news! Please click the button to load them
-		a(class='btn btn-primary' href='/feeds' role='button') Feed me!
+		a(class='btn btn-primary load-feeds' href='/feeds' role='button') Feed me!
+		img(src='/img/loader.gif' class='loader hide ml-2')
