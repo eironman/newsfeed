@@ -1,5 +1,5 @@
 const request = require('request');
-const feedsUrl = 'https://hn.algolia.com/api/v1/search_by_date?query=nodejs';
+const feedsUrl = 'https://hn.algolia.com/api/v1/search_by_date?query=nodejs&hitsPerPage=40';
 
 // Filters feeds: removes old feeds or without title
 let filterFeeds = (deletedFeeds, newestFeed, feedsData) => {

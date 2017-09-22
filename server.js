@@ -1,10 +1,9 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const mongodb = require('mongodb');
 const mongoClient = require('mongodb').MongoClient
 const feedsHelper = require('./feeds');
-const moment = require('moment');
+const helper = require('./helper');
 const mongodbUrl = 'mongodb://aaron:reigndesign@ds141454.mlab.com:41454/hacker-news-feed';
 const cronJob = require('cron').CronJob;
 
@@ -45,7 +44,7 @@ app.get('/', (req, res) => {
 	// Get the latest feeds in db
 	db.collection('nodejs-news').find().sort({'created_at': -1}).toArray(function(err, results) {
 		for (let i=0; i<results.length; i++) {
-			results[i]['created_at'] = moment(results[i]['created_at']).fromNow();
+			results[i]['created_at'] = helper.formatDate(results[i]['created_at']);
 		}
 		res.render('index', {'news': results});
 	});
